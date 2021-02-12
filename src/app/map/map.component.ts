@@ -12,7 +12,7 @@ export class MapComponent implements OnInit {
   constructor() { }
 
   selectedMap = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
-  tileLayer: L.TileLayer = L.tileLayer(this.selectedMap);
+  tileLayer: L.TileLayer = L.tileLayer(this.selectedMap, { crossOrigin: true });
   radiusMeters = 10000;
   latlong = new LatLng(3.1420, 101.6918);
   // destLatLong = new LatLng(6.12439835, 100.36756271297492);
@@ -94,14 +94,14 @@ export class MapComponent implements OnInit {
 
     // origin marker
     this.myIcon = L.icon({
-      iconUrl: 'https://cdn3.iconfinder.com/data/icons/tango-icon-library/48/go-home-512.png',
+      iconUrl: 'https://cdn0.iconfinder.com/data/icons/small-n-flat/24/678111-map-marker-512.png',
       iconSize: [32, 32],
-      iconAnchor: [32, 32],
-      popupAnchor: [-3, -76],
+      //iconAnchor: [32, 32],
+      //popupAnchor: [-3, -76],
     });
     this.originMarker = L.marker(this.latlong, {
       title: 'Your location',
-      // icon: this.myIcon,
+      icon: this.myIcon,
       draggable: true
     }).addTo(this.map);
     this.originMarker.on('drag', (event) => {
