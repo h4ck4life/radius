@@ -34,7 +34,7 @@ export class MapComponent implements OnInit {
         if (!isNaN(params.lat)
           && !isNaN(params.lng)
           && !isNaN(params.radius)
-          ) {
+        ) {
           this.latlong.lat = parseFloat(params.lat);
           this.latlong.lng = parseFloat(params.lng);
           this.radiusMeters = params.radius * 1000;
@@ -112,24 +112,16 @@ export class MapComponent implements OnInit {
 
     this.getMapStyles();
 
-    // Create the map
     this.map = L.map('map', { zoomControl: false }).setView(this.latlong, this.zoomLevel);
 
-    // Set up the OSM layer
     this.tileLayer.addTo(this.map);
 
-    // Set scale to map
     L.control.scale({ metric: true, imperial: false }).addTo(this.map);
-
-    // Add attribution note
     L.control.attribution({ prefix: '@h4ck4life' }).addAttribution('#StaySafe').addTo(this.map);
 
-    // origin marker
     this.myIcon = L.icon({
       iconUrl: 'https://cdn0.iconfinder.com/data/icons/small-n-flat/24/678111-map-marker-512.png',
-      iconSize: [48, 48],
-      //iconAnchor: [32, 32],
-      //popupAnchor: [-3, -76],
+      iconSize: [48, 48]
     });
     this.originMarker = L.marker(this.latlong, {
       title: 'Your location',
@@ -162,10 +154,8 @@ export class MapComponent implements OnInit {
     }).addTo(this.map);
      */
 
-    // Radius
     this.radiusMarker = L.circle(this.latlong, {
       radius: this.radiusMeters
     }).addTo(this.map);
   }
-
 }
