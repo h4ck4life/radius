@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import * as L from 'leaflet';
 import { LatLng } from 'leaflet';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-map',
@@ -9,12 +11,16 @@ import { LatLng } from 'leaflet';
 })
 export class MapComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private location: Location,
+  ) { }
 
   selectedMap = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
   tileLayer: L.TileLayer = L.tileLayer(this.selectedMap, { crossOrigin: true });
   radiusMeters = 10000;
-  latlong = new LatLng(3.1420, 101.6918);
+  latlong = new LatLng(3.1420, 101.6918); // National Mosque
   // destLatLong = new LatLng(6.12439835, 100.36756271297492);
   map: L.Map = null;
   radiusMarker: L.Circle = null;
@@ -22,6 +28,13 @@ export class MapComponent implements OnInit {
   originMarker: L.Marker = null;
 
   ngOnInit(): void {
+    this.route.params.subscribe((params) => {
+      if (params.lat && params.lng && params.radius) {
+        this.latlong.lat = parseFloat(params.lat);
+        this.latlong.lng = parseFloat(params.lng);
+        this.radiusMeters = params.radius * 1000;
+      }
+    });
     this.initMap();
   }
 
@@ -48,9 +61,13 @@ export class MapComponent implements OnInit {
 
   setRadiusMarker(radiusKm: string): void {
     if (radiusKm && radiusKm !== '') {
-      const radius = parseInt(radiusKm, 8);
+      // tslint:disable-next-line: radix
+      const radius = parseInt(radiusKm);
       if (radius > 4) {
-        this.radiusMarker.setRadius(radius * 1000);
+        const updatedRadius = radius * 1000;
+        this.radiusMarker.setRadius(updatedRadius);
+        this.radiusMeters = updatedRadius;
+        this.updateUrlParams();
       }
     }
   }
@@ -62,7 +79,12 @@ export class MapComponent implements OnInit {
       this.map.panTo(this.latlong);
       this.originMarker.setLatLng(this.latlong);
       this.radiusMarker.setLatLng(this.latlong);
+      this.updateUrlParams(data.lat, data.lng);
     });
+  }
+
+  private updateUrlParams(lat = this.latlong.lat, lng = this.latlong.lng): void {
+    this.location.replaceState(`/${lat}/${lng}/${this.radiusMeters / 1000}`);
   }
 
   private getPosition(): Promise<any> {
@@ -113,6 +135,7 @@ export class MapComponent implements OnInit {
       const marker = event.target;
       const position = marker.getLatLng();
       this.map.panTo(new L.LatLng(position.lat, position.lng));
+      this.updateUrlParams(position.lat, position.lng);
     });
 
     // destination marker
