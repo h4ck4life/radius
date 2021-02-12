@@ -94,7 +94,7 @@ export class MapComponent implements OnInit {
   }
 
   private updateUrlParams(lat = this.latlong.lat, lng = this.latlong.lng): void {
-    this.location.replaceState(`/${lat}/${lng}/${this.radiusMeters / 1000}`);
+    this.location.replaceState(`/${lat.toFixed(4)}/${lng.toFixed(4)}/${this.radiusMeters / 1000}`);
   }
 
   private getPosition(): Promise<any> {
