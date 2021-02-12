@@ -17,6 +17,7 @@ export class MapComponent implements OnInit {
   latlong = new LatLng(6.1247736, 100.3914772);
   destLatLong = new LatLng(6.12439835, 100.36756271297492);
   map: L.Map = null;
+  radiusMarker: L.Circle = null;
 
   ngOnInit(): void {
     this.initMap();
@@ -35,6 +36,15 @@ export class MapComponent implements OnInit {
         break;
     }
     this.tileLayer.setUrl(this.selectedMap);
+  }
+
+  setRadiusMarker(radiusKm: string): void {
+    if (radiusKm && radiusKm !== '') {
+      const radius = parseInt(radiusKm, 8);
+      if (radius > 4) {
+        this.radiusMarker.setRadius(radius * 1000);
+      }
+    }
   }
 
   private initMap(): void {
@@ -62,7 +72,7 @@ export class MapComponent implements OnInit {
     originMarker.on('drag', (event) => {
       const marker = event.target;
       const position = marker.getLatLng();
-      radiusMarker.setLatLng(new L.LatLng(position.lat, position.lng));
+      this.radiusMarker.setLatLng(new L.LatLng(position.lat, position.lng));
       //map.panTo(new L.LatLng(position.lat, position.lng))
     });
 
@@ -79,7 +89,7 @@ export class MapComponent implements OnInit {
     }).addTo(this.map);
 
     // Radius
-    const radiusMarker = L.circle(this.latlong, {
+    this.radiusMarker = L.circle(this.latlong, {
       radius: this.radiusMeters
     }).addTo(this.map);
   }

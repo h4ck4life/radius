@@ -49,7 +49,7 @@
                     </div>
                   </div>
                 <div class="input-group mr-sm-2">
-                    <input type="text" placeholder="Radius range" class="form-control"
+                    <input type="text" (change)="setRadiusMarker($event.target.value)" value="{{radiusMeters / 1000}}" placeholder="Radius range" class="form-control"
                         aria-label="Radius in KiloMeters">
                     <div class="input-group-append">
                         <span class="input-group-text">km</span>
