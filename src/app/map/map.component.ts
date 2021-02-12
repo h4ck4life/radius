@@ -53,7 +53,7 @@ export class MapComponent implements OnInit {
     this.getPosition().then((data) => {
       this.latlong.lat = data.lat;
       this.latlong.lng = data.lng;
-      this.map.setView(this.latlong, 12);
+      this.map.panTo(this.latlong);
       this.originMarker.setLatLng(this.latlong);
       this.radiusMarker.setLatLng(this.latlong);
     });
@@ -96,7 +96,11 @@ export class MapComponent implements OnInit {
       const marker = event.target;
       const position = marker.getLatLng();
       this.radiusMarker.setLatLng(new L.LatLng(position.lat, position.lng));
-      //map.panTo(new L.LatLng(position.lat, position.lng))
+    });
+    this.originMarker.on('dragend', (event) => {
+      const marker = event.target;
+      const position = marker.getLatLng();
+      this.map.panTo(new L.LatLng(position.lat, position.lng));
     });
 
     // destination marker
