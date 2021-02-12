@@ -14,8 +14,8 @@ export class MapComponent implements OnInit {
   selectedMap = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
   tileLayer: L.TileLayer = L.tileLayer(this.selectedMap);
   radiusMeters = 10000;
-  latlong = new LatLng(6.1247736, 100.3914772);
-  destLatLong = new LatLng(6.12439835, 100.36756271297492);
+  latlong = new LatLng(3.1420, 101.6918);
+  // destLatLong = new LatLng(6.12439835, 100.36756271297492);
   map: L.Map = null;
   radiusMarker: L.Circle = null;
   myIcon: L.Icon = null;
@@ -35,6 +35,12 @@ export class MapComponent implements OnInit {
         break;
       case '3':
         this.selectedMap = 'http://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png';
+        break;
+      case '4':
+        this.selectedMap = 'http://tile.stamen.com/toner/{z}/{x}/{y}.png';
+        break;
+      case '5':
+        this.selectedMap = 'http://services.arcgisonline.com/arcgis/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}';
         break;
     }
     this.tileLayer.setUrl(this.selectedMap);
@@ -88,8 +94,8 @@ export class MapComponent implements OnInit {
       popupAnchor: [-3, -76],
     });
     this.originMarker = L.marker(this.latlong, {
-      title: 'origin',
-      icon: this.myIcon,
+      title: 'Your location',
+      // icon: this.myIcon,
       draggable: true
     }).addTo(this.map);
     this.originMarker.on('drag', (event) => {
@@ -104,6 +110,7 @@ export class MapComponent implements OnInit {
     });
 
     // destination marker
+    /* 
     const destIcon = L.icon({
       iconUrl: 'https://cdn2.iconfinder.com/data/icons/ios-7-icons/50/finish_flag-512.png',
       iconSize: [32, 32],
@@ -114,6 +121,7 @@ export class MapComponent implements OnInit {
       title: 'Menara Alor Setar, Jalan Istana Kuning, Taman Stadium, Kampung Khatijah, Alor Setar, Kota Setar, Kedah, 05100, Malaysia',
       icon: destIcon
     }).addTo(this.map);
+     */
 
     // Radius
     this.radiusMarker = L.circle(this.latlong, {

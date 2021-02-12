@@ -40,16 +40,18 @@
             <form class="form-inline my-2 my-lg-0">
                 <div class="input-group mr-sm-2">
                     <select (change)="getMapStyles($event.target.value)" class="form-control" id="exampleFormControlSelect1">
-                      <option value="1">OpenStreetMap</option>
+                      <option value="1">Open Street Map</option>
                       <option value="2">Light Minimal</option>
                       <option value="3">Dark Minimal</option>
+                      <option value="4">Toner</option>
+                      <option value="5">World Street Map</option>
                     </select>
                     <div class="input-group-append">
                         <span class="input-group-text">Map style</span>
                     </div>
                   </div>
                 <div class="input-group mr-sm-2">
-                    <input type="text" (change)="setRadiusMarker($event.target.value)" value="{{radiusMeters / 1000}}" placeholder="Radius range" class="form-control"
+                    <input type="text" (keyup)="setRadiusMarker($event.target.value)" value="{{radiusMeters / 1000}}" placeholder="Radius range" class="form-control"
                         aria-label="Radius in KiloMeters">
                     <div class="input-group-append">
                         <span class="input-group-text">km</span>
