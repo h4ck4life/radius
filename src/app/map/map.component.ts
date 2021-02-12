@@ -100,14 +100,13 @@ export class MapComponent implements OnInit {
     } else {
       this.trackMe = true;
       const destIcon = L.icon({
-        iconUrl: 'https://cdn1.iconfinder.com/data/icons/icons-for-a-site-1/64/advantage_deliver-512.png',
+        iconUrl: 'https://cdn3.iconfinder.com/data/icons/business-and-office-51/32/rocket_science_spaceship_technology-512.png',
         iconSize: [32, 32],
       });
       this.trackMeMarker = L.marker(new LatLng(0, 0), {
-        //title: 'You',
-        //icon: destIcon,
+        icon: destIcon,
       }).addTo(this.map);
-      this.trackMeMarker.bindTooltip('You - Live tracking', { permanent: true }).openTooltip();
+      this.trackMeMarker.bindTooltip('You - Live tracking', { permanent: true, offset: new L.Point(20, 0) }).openTooltip();
       this.watchId = navigator.geolocation.watchPosition((position) => {
         this.trackMeMarker.setLatLng(new LatLng(position.coords.latitude, position.coords.longitude));
       }, (error) => {
