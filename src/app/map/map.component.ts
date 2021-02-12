@@ -86,6 +86,9 @@ export class MapComponent implements OnInit {
     // Set up the OSM layer
     this.tileLayer.addTo(this.map);
 
+    // Set scale to map
+    L.control.scale({ metric: true, imperial: false }).addTo(this.map);
+
     // origin marker
     this.myIcon = L.icon({
       iconUrl: 'https://cdn3.iconfinder.com/data/icons/tango-icon-library/48/go-home-512.png',
