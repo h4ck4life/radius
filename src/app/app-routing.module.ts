@@ -4,7 +4,7 @@ import { MapComponent } from './map/map.component';
 
 const routes: Routes = [
   { path: '', component: MapComponent },
-  { path: ':lat/:lng/:radius', component: MapComponent },
+  { path: ':lat/:lng/:radius/:zoom', component: MapComponent },
   { path: '**', redirectTo: '' }
   //{path: '**', component: PageNotFoundComponent}
 ];

@@ -34,10 +34,12 @@ export class MapComponent implements OnInit {
         if (!isNaN(params.lat)
           && !isNaN(params.lng)
           && !isNaN(params.radius)
+          && !isNaN(params.zoom)
         ) {
           this.latlong.lat = parseFloat(params.lat);
           this.latlong.lng = parseFloat(params.lng);
           this.radiusMeters = params.radius * 1000;
+          this.zoomLevel = params.zoom;
         } else {
           this.router.navigateByUrl('');
         }
@@ -73,7 +75,7 @@ export class MapComponent implements OnInit {
     if (radiusKm && radiusKm !== '') {
       // tslint:disable-next-line: radix
       const radius = parseInt(radiusKm);
-      if (radius > 4) {
+      if (radius > 0) {
         const updatedRadius = radius * 1000;
         this.radiusMarker.setRadius(updatedRadius);
         this.radiusMeters = updatedRadius;
@@ -94,7 +96,7 @@ export class MapComponent implements OnInit {
   }
 
   private updateUrlParams(lat = this.latlong.lat, lng = this.latlong.lng): void {
-    this.location.replaceState(`/${lat.toFixed(4)}/${lng.toFixed(4)}/${this.radiusMeters / 1000}`);
+    this.location.replaceState(`/${lat.toFixed(4)}/${lng.toFixed(4)}/${this.radiusMeters / 1000}/${this.map.getZoom()}`);
   }
 
   private getPosition(): Promise<any> {
@@ -113,6 +115,9 @@ export class MapComponent implements OnInit {
     this.getMapStyles();
 
     this.map = L.map('map', { zoomControl: false }).setView(this.latlong, this.zoomLevel);
+    this.map.on('zoomend', () => {
+      this.updateUrlParams();
+    });
 
     this.tileLayer.addTo(this.map);
 
