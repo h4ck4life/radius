@@ -158,7 +158,7 @@ export class MapComponent implements OnInit {
     L.control.attribution({ prefix: '@h4ck4life' }).addAttribution('#StaySafe').addTo(this.map);
 
     this.myIcon = L.icon({
-      iconUrl: 'https://cdn0.iconfinder.com/data/icons/small-n-flat/24/678111-map-marker-512.png',
+      iconUrl: 'https://cdn3.iconfinder.com/data/icons/business-and-office-51/32/office_business_building_corporate-512.png',
       iconSize: [48, 48]
     });
     this.originMarker = L.marker(this.latlong, {
