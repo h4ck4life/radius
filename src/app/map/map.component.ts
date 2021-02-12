@@ -106,7 +106,7 @@ export class MapComponent implements OnInit {
       this.trackMeMarker = L.marker(new LatLng(0, 0), {
         icon: destIcon,
       }).addTo(this.map);
-      this.trackMeMarker.bindTooltip('You - Live tracking', { permanent: true, offset: new L.Point(20, 0) }).openTooltip();
+      this.trackMeMarker.bindTooltip('You - Live tracking', { offset: new L.Point(20, 0) }).openTooltip();
       this.watchId = navigator.geolocation.watchPosition((position) => {
         this.trackMeMarker.setLatLng(new LatLng(position.coords.latitude, position.coords.longitude));
       }, (error) => {
@@ -167,6 +167,7 @@ export class MapComponent implements OnInit {
       draggable: true,
       riseOnHover: true
     }).addTo(this.map);
+    this.originMarker.bindTooltip('Origin location', { offset: new L.Point(25, 0) }).openTooltip();
     this.originMarker.on('drag', (event) => {
       const marker = event.target;
       const position = marker.getLatLng();
