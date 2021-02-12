@@ -39,10 +39,10 @@
             </ul>
             <form class="form-inline my-2 my-lg-0">
                 <div class="input-group mr-sm-2">
-                    <select class="form-control" id="exampleFormControlSelect1">
-                      <option>OpenStreetMap</option>
-                      <option>Light Minimal</option>
-                      <option>Dark Minimal</option>
+                    <select (change)="getMapStyles($event.target.value)" class="form-control" id="exampleFormControlSelect1">
+                      <option value="1">OpenStreetMap</option>
+                      <option value="2">Light Minimal</option>
+                      <option value="3">Dark Minimal</option>
                     </select>
                     <div class="input-group-append">
                         <span class="input-group-text">Map style</span>

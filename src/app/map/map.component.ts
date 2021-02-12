@@ -11,22 +11,41 @@ export class MapComponent implements OnInit {
 
   constructor() { }
 
+  selectedMap = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+  tileLayer: L.TileLayer = L.tileLayer(this.selectedMap);
+  radiusMeters = 10000;
+  latlong = new LatLng(6.1247736, 100.3914772);
+  destLatLong = new LatLng(6.12439835, 100.36756271297492);
+  map: L.Map = null;
+
   ngOnInit(): void {
     this.initMap();
   }
 
+  getMapStyles(style: string = '1'): void {
+    switch (style) {
+      case '1':
+        this.selectedMap = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+        break;
+      case '2':
+        this.selectedMap = 'http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png';
+        break;
+      case '3':
+        this.selectedMap = 'http://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png';
+        break;
+    }
+    this.tileLayer.setUrl(this.selectedMap);
+  }
+
   private initMap(): void {
-    const latlong = new LatLng(6.1247736, 100.3914772);
-    const destLatLong = new LatLng(6.12439835, 100.36756271297492);
-    const radiusMeters = 10000;
+
+    this.getMapStyles();
 
     // Create the map
-    const map = L.map('map', {zoomControl: false}).setView(latlong, 12);
+    this.map = L.map('map', { zoomControl: false }).setView(this.latlong, 12);
 
     // Set up the OSM layer
-    L.tileLayer(
-      'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
-    ).addTo(map);
+    this.tileLayer.addTo(this.map);
 
     // origin marker
     const myIcon = L.icon({
@@ -35,11 +54,11 @@ export class MapComponent implements OnInit {
       iconAnchor: [32, 32],
       popupAnchor: [-3, -76],
     });
-    const originMarker = L.marker(latlong, {
+    const originMarker = L.marker(this.latlong, {
       title: 'origin',
       icon: myIcon,
       draggable: true
-    }).addTo(map);
+    }).addTo(this.map);
     originMarker.on('drag', (event) => {
       const marker = event.target;
       const position = marker.getLatLng();
@@ -54,15 +73,15 @@ export class MapComponent implements OnInit {
       iconAnchor: [32, 32],
       popupAnchor: [-3, -76],
     });
-    L.marker(destLatLong, {
+    L.marker(this.destLatLong, {
       title: 'Menara Alor Setar, Jalan Istana Kuning, Taman Stadium, Kampung Khatijah, Alor Setar, Kota Setar, Kedah, 05100, Malaysia',
       icon: destIcon
-    }).addTo(map);
+    }).addTo(this.map);
 
     // Radius
-    const radiusMarker = L.circle(latlong, {
-      radius: radiusMeters
-    }).addTo(map);
+    const radiusMarker = L.circle(this.latlong, {
+      radius: this.radiusMeters
+    }).addTo(this.map);
   }
 
 }
