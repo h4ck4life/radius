@@ -2,7 +2,7 @@
 <div class="map-container">
     <nav class="navbar navbar-expand-lg navbar-light">
         <a class="navbar-brand" href="#">
-            <img src="https://cdn0.iconfinder.com/data/icons/3d-shapes-6/100/Shape-18-512.png" width="32" height="32"
+            <img src="https://cdn1.iconfinder.com/data/icons/mirrored-twins-icon-set-hollow/512/PixelKit_target_icon.png" width="32" height="32"
                 class="d-inline-block align-top" alt="">
             Radius
         </a>
@@ -39,26 +39,32 @@
             </ul>
             <form class="form-inline my-2 my-lg-0">
                 <div class="input-group mr-sm-2">
-                    <select (change)="getMapStyles($event.target.value)" class="form-control" id="exampleFormControlSelect1">
-                      <option value="1">Open Street Map</option>
-                      <option value="2">Light Minimal</option>
-                      <option value="3">Dark Minimal</option>
-                      <!-- <option value="4">Toner</option> -->
-                      <option value="5">World Street Map</option>
+                    <select (change)="getMapStyles($event.target.value)" class="form-control"
+                        id="exampleFormControlSelect1">
+                        <option value="1">Open Street Map</option>
+                        <option value="2">Light Minimal</option>
+                        <option value="3">Dark Minimal</option>
+                        <!-- <option value="4">Toner</option> -->
+                        <option value="5">World Street Map</option>
                     </select>
                     <div class="input-group-append">
                         <span class="input-group-text">Map style</span>
                     </div>
-                  </div>
+                </div>
                 <div class="input-group mr-sm-2">
-                    <input type="text" (keyup)="setRadiusMarker($event.target.value)" value="{{radiusMeters / 1000}}" placeholder="Radius range" class="form-control"
-                        aria-label="Radius in KiloMeters">
+                    <input type="text" (keyup)="setRadiusMarker($event.target.value)" value="{{radiusMeters / 1000}}"
+                        placeholder="Radius range" class="form-control" aria-label="Radius in KiloMeters">
                     <div class="input-group-append">
                         <span class="input-group-text">km</span>
                         <button (click)="getUserLocation()" class="btn btn-outline-info" type="button">
-                            <img src="https://cdn3.iconfinder.com/data/icons/google-material-design-icons/48/ic_my_location_48px-512.png"
+                            <img src="https://cdn4.iconfinder.com/data/icons/business-finance-vol-13-1/512/15-512.png"
                                 width="18" height="18" />
                         </button>
+                    </div>
+                </div>
+                <div class="input-group mr-sm-2">
+                    <div class="input-group-append">
+                        <button (click)="trackMyLocation()" class="btn {{trackMe ? 'btn-info' : 'btn-outline-info'}}" type="button">Track me</button>
                     </div>
                 </div>
                 <!-- 

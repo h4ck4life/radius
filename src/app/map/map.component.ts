@@ -27,6 +27,14 @@ export class MapComponent implements OnInit {
   myIcon: L.Icon = null;
   originMarker: L.Marker = null;
   zoomLevel = 12;
+  trackMe = false;
+  watchId = 0;
+  trackMeMarker: L.Marker = null;
+  positionOptions = {
+    enableHighAccuracy: true,
+    timeout: 3000,
+    maximumAge: 60000
+  };
 
   ngOnInit(): void {
     try {
@@ -84,6 +92,30 @@ export class MapComponent implements OnInit {
     }
   }
 
+  trackMyLocation(): void {
+    if (this.trackMe === true) {
+      this.trackMe = false;
+      this.map.removeLayer(this.trackMeMarker);
+      navigator.geolocation.clearWatch(this.watchId);
+    } else {
+      this.trackMe = true;
+      const destIcon = L.icon({
+        iconUrl: 'https://cdn1.iconfinder.com/data/icons/icons-for-a-site-1/64/advantage_deliver-512.png',
+        iconSize: [32, 32],
+      });
+      this.trackMeMarker = L.marker(new LatLng(0, 0), {
+        //title: 'You',
+        //icon: destIcon,
+      }).addTo(this.map);
+      this.trackMeMarker.bindTooltip('You - Live tracking', { permanent: true }).openTooltip();
+      this.watchId = navigator.geolocation.watchPosition((position) => {
+        this.trackMeMarker.setLatLng(new LatLng(position.coords.latitude, position.coords.longitude));
+      }, (error) => {
+        console.log(error);
+      }, this.positionOptions);
+    }
+  }
+
   getUserLocation(): void {
     this.getPosition().then((data) => {
       this.latlong.lat = data.lat;
@@ -101,12 +133,14 @@ export class MapComponent implements OnInit {
 
   private getPosition(): Promise<any> {
     return new Promise((resolve, reject) => {
-      navigator.geolocation.getCurrentPosition(resp => {
-        resolve({ lng: resp.coords.longitude, lat: resp.coords.latitude });
-      },
-        err => {
-          reject(err);
+      navigator.geolocation.getCurrentPosition((resp) => {
+        resolve({
+          lng: resp.coords.longitude,
+          lat: resp.coords.latitude
         });
+      }, (err) => {
+        reject(err);
+      }, this.positionOptions);
     });
   }
 
@@ -129,9 +163,10 @@ export class MapComponent implements OnInit {
       iconSize: [48, 48]
     });
     this.originMarker = L.marker(this.latlong, {
-      title: 'Your location',
+      //title: 'Center',
       icon: this.myIcon,
-      draggable: true
+      draggable: true,
+      riseOnHover: true
     }).addTo(this.map);
     this.originMarker.on('drag', (event) => {
       const marker = event.target;
