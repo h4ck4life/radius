@@ -21,7 +21,7 @@ export class MapComponent implements OnInit {
     const radiusMeters = 10000;
 
     // Create the map
-    const map = L.map('map').setView(latlong, 12);
+    const map = L.map('map', {zoomControl: false}).setView(latlong, 12);
 
     // Set up the OSM layer
     L.tileLayer(

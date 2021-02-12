@@ -1,9 +1,9 @@
 <!-- Image and text -->
 <div class="map-container">
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <nav class="navbar navbar-expand-lg navbar-light">
         <a class="navbar-brand" href="#">
-            <img src="https://cdn4.iconfinder.com/data/icons/abstract-symbols/100/abstract_symbol-09-512.png" width="32"
-                height="32" class="d-inline-block align-top" alt="">
+            <img src="https://cdn0.iconfinder.com/data/icons/3d-shapes-6/100/Shape-18-512.png" width="32" height="32"
+                class="d-inline-block align-top" alt="">
             Radius
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
@@ -13,6 +13,7 @@
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
+                <!-- 
                 <li class="nav-item active">
                     <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
                 </li>
@@ -34,10 +35,42 @@
                 <li class="nav-item">
                     <a class="nav-link disabled" href="#">Disabled</a>
                 </li>
+                 -->
             </ul>
             <form class="form-inline my-2 my-lg-0">
-                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                <div class="input-group mr-sm-2">
+                    <select class="form-control" id="exampleFormControlSelect1">
+                      <option>OpenStreetMap</option>
+                      <option>Light Minimal</option>
+                      <option>Dark Minimal</option>
+                    </select>
+                    <div class="input-group-append">
+                        <span class="input-group-text">Map style</span>
+                    </div>
+                  </div>
+                <div class="input-group mr-sm-2">
+                    <input type="text" placeholder="Radius range" class="form-control"
+                        aria-label="Radius in KiloMeters">
+                    <div class="input-group-append">
+                        <span class="input-group-text">km</span>
+                    </div>
+                </div>
+                <div class="input-group mr-sm-2">
+                    <input class="form-control" type="search" placeholder="Origin" aria-label="Search">
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-info" type="button">Set</button>
+                        <button class="btn btn-outline-info" type="button">
+                            <img src="https://cdn3.iconfinder.com/data/icons/google-material-design-icons/48/ic_my_location_48px-512.png"
+                                width="18" height="18" />
+                        </button>
+                    </div>
+                </div>
+                <div class="input-group">
+                    <input class="form-control" type="search" placeholder="Destination" aria-label="Search">
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-info" type="button">Pin</button>
+                    </div>
+                </div>
             </form>
         </div>
     </nav>

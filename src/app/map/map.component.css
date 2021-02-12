@@ -14,4 +14,22 @@
 
 #map {
   height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+.navbar {
+  z-index: 999;
+  background-color: rgb(248 249 250 / 80%);
+}
+
+.navbar > form > .input-group {
+    margin-bottom: 0 !important;
+}
+
+.navbar > div.show > form > .input-group {
+    margin-bottom: 5px !important;
 }
