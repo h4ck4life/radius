@@ -95,7 +95,7 @@ export class MapComponent implements OnInit {
     // origin marker
     this.myIcon = L.icon({
       iconUrl: 'https://cdn0.iconfinder.com/data/icons/small-n-flat/24/678111-map-marker-512.png',
-      iconSize: [32, 32],
+      iconSize: [48, 48],
       //iconAnchor: [32, 32],
       //popupAnchor: [-3, -76],
     });
