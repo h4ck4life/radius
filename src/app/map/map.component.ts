@@ -89,6 +89,9 @@ export class MapComponent implements OnInit {
     // Set scale to map
     L.control.scale({ metric: true, imperial: false }).addTo(this.map);
 
+    // Add attribution note
+    L.control.attribution({ prefix: '@h4ck4life' }).addAttribution('#KitaJagaKita').addTo(this.map);
+
     // origin marker
     this.myIcon = L.icon({
       iconUrl: 'https://cdn3.iconfinder.com/data/icons/tango-icon-library/48/go-home-512.png',
