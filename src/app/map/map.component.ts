@@ -18,6 +18,8 @@ export class MapComponent implements OnInit {
   destLatLong = new LatLng(6.12439835, 100.36756271297492);
   map: L.Map = null;
   radiusMarker: L.Circle = null;
+  myIcon: L.Icon = null;
+  originMarker: L.Marker = null;
 
   ngOnInit(): void {
     this.initMap();
@@ -47,6 +49,27 @@ export class MapComponent implements OnInit {
     }
   }
 
+  getUserLocation(): void {
+    this.getPosition().then((data) => {
+      this.latlong.lat = data.lat;
+      this.latlong.lng = data.lng;
+      this.map.setView(this.latlong, 12);
+      this.originMarker.setLatLng(this.latlong);
+      this.radiusMarker.setLatLng(this.latlong);
+    });
+  }
+
+  private getPosition(): Promise<any> {
+    return new Promise((resolve, reject) => {
+      navigator.geolocation.getCurrentPosition(resp => {
+        resolve({ lng: resp.coords.longitude, lat: resp.coords.latitude });
+      },
+        err => {
+          reject(err);
+        });
+    });
+  }
+
   private initMap(): void {
 
     this.getMapStyles();
@@ -58,18 +81,18 @@ export class MapComponent implements OnInit {
     this.tileLayer.addTo(this.map);
 
     // origin marker
-    const myIcon = L.icon({
+    this.myIcon = L.icon({
       iconUrl: 'https://cdn3.iconfinder.com/data/icons/tango-icon-library/48/go-home-512.png',
       iconSize: [32, 32],
       iconAnchor: [32, 32],
       popupAnchor: [-3, -76],
     });
-    const originMarker = L.marker(this.latlong, {
+    this.originMarker = L.marker(this.latlong, {
       title: 'origin',
-      icon: myIcon,
+      icon: this.myIcon,
       draggable: true
     }).addTo(this.map);
-    originMarker.on('drag', (event) => {
+    this.originMarker.on('drag', (event) => {
       const marker = event.target;
       const position = marker.getLatLng();
       this.radiusMarker.setLatLng(new L.LatLng(position.lat, position.lng));
