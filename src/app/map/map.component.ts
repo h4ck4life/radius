@@ -90,7 +90,7 @@ export class MapComponent implements OnInit {
     L.control.scale({ metric: true, imperial: false }).addTo(this.map);
 
     // Add attribution note
-    L.control.attribution({ prefix: '@h4ck4life' }).addAttribution('#KitaJagaKita').addTo(this.map);
+    L.control.attribution({ prefix: '@h4ck4life' }).addAttribution('#StaySafe').addTo(this.map);
 
     // origin marker
     this.myIcon = L.icon({
