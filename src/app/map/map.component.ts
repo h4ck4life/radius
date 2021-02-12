@@ -26,16 +26,26 @@ export class MapComponent implements OnInit {
   radiusMarker: L.Circle = null;
   myIcon: L.Icon = null;
   originMarker: L.Marker = null;
+  zoomLevel = 12;
 
   ngOnInit(): void {
-    this.route.params.subscribe((params) => {
-      if (params.lat && params.lng && params.radius) {
-        this.latlong.lat = parseFloat(params.lat);
-        this.latlong.lng = parseFloat(params.lng);
-        this.radiusMeters = params.radius * 1000;
-      }
-    });
-    this.initMap();
+    try {
+      this.route.params.subscribe((params) => {
+        if (!isNaN(params.lat)
+          && !isNaN(params.lng)
+          && !isNaN(params.radius)
+          ) {
+          this.latlong.lat = parseFloat(params.lat);
+          this.latlong.lng = parseFloat(params.lng);
+          this.radiusMeters = params.radius * 1000;
+        } else {
+          this.router.navigateByUrl('');
+        }
+        this.initMap();
+      });
+    } catch (error) {
+      this.router.navigateByUrl('');
+    }
   }
 
   getMapStyles(style: string = '1'): void {
@@ -103,7 +113,7 @@ export class MapComponent implements OnInit {
     this.getMapStyles();
 
     // Create the map
-    this.map = L.map('map', { zoomControl: false }).setView(this.latlong, 12);
+    this.map = L.map('map', { zoomControl: false }).setView(this.latlong, this.zoomLevel);
 
     // Set up the OSM layer
     this.tileLayer.addTo(this.map);
