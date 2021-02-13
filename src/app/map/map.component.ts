@@ -3,6 +3,7 @@ import * as L from 'leaflet';
 import { LatLng } from 'leaflet';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
+import { OsmService } from '../osm.service';
 
 @Component({
   selector: 'app-map',
@@ -15,6 +16,7 @@ export class MapComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private location: Location,
+    private osm: OsmService
   ) { }
 
   selectedMap = '1';
@@ -41,6 +43,7 @@ export class MapComponent implements OnInit {
     maximumAge: 60000
   };
   wakeLock = null;
+  searchTypeTimeout = null;
 
   ngOnInit(): void {
     try {
@@ -191,6 +194,17 @@ export class MapComponent implements OnInit {
       this.radiusMarker.setLatLng(this.latlong);
       this.updateUrlParams(data.lat, data.lng);
     });
+  }
+
+  searchPlaces(placeName: string): void {
+    if (placeName && placeName.length > 0 && placeName.length > 3) {
+      clearTimeout(this.searchTypeTimeout);
+      this.searchTypeTimeout = setTimeout(() => {
+        this.osm.searchPlace(placeName).subscribe((data) => {
+          console.log(data);
+        });
+      }, 2000);
+    }
   }
 
   private generatePulsatingMarker(radius, color): L.DivIcon {

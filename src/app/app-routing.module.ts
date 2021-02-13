@@ -6,7 +6,6 @@ const routes: Routes = [
   { path: '', component: MapComponent },
   { path: ':lat/:lng/:radius/:zoom/:mapstyle', component: MapComponent },
   { path: '**', redirectTo: '' }
-  //{path: '**', component: PageNotFoundComponent}
 ];
 
 @NgModule({
