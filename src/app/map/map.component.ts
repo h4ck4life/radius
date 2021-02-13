@@ -32,7 +32,7 @@ export class MapComponent implements OnInit {
   trackMeMarker: L.Marker = null;
   positionOptions = {
     enableHighAccuracy: true,
-    timeout: 3000,
+    timeout: 30000,
     maximumAge: 60000
   };
   wakeLock = null;
@@ -207,7 +207,8 @@ export class MapComponent implements OnInit {
       zoomControl: false,
       bounceAtZoomLimits: true,
       markerZoomAnimation: true,
-      minZoom: 10
+      minZoom: 10,
+      attributionControl: false
     }).setView(this.latlong, this.zoomLevel);
 
     L.control.zoom({
