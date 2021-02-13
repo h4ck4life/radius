@@ -303,6 +303,8 @@ export class MapComponent implements OnInit {
 
     this.radiusMarker = L.circle(this.latlong, {
       radius: this.radiusMeters
+    }).setStyle({
+      stroke: false
     }).addTo(this.map);
   }
 }
