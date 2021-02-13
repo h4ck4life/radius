@@ -85,6 +85,24 @@ export class MapComponent implements OnInit {
       case '5':
         this.selectedMap = 'http://services.arcgisonline.com/arcgis/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}';
         break;
+      case '6':
+        this.selectedMap = 'https://tiles.stadiamaps.com/tiles/osm_bright/{z}/{x}/{y}{r}.png';
+        break;
+      case '7':
+        this.selectedMap = 'https://stamen-tiles-{s}.a.ssl.fastly.net/toner-lite/{z}/{x}/{y}{r}.{ext}';
+        break;
+      case '8':
+        this.selectedMap = 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}';
+        break;
+      case '9':
+        this.selectedMap = 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}';
+        break;
+      case '10':
+        this.selectedMap = 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png';
+        break;
+      case '11':
+        this.selectedMap = 'https://tiles.wmflabs.org/hikebike/{z}/{x}/{y}.png';
+        break;
     }
     this.tileLayer.setUrl(this.selectedMap);
   }
