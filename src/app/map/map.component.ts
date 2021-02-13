@@ -44,6 +44,7 @@ export class MapComponent implements OnInit {
   };
   wakeLock = null;
   searchTypeTimeout = null;
+  placesList = [];
 
   ngOnInit(): void {
     try {
@@ -201,6 +202,7 @@ export class MapComponent implements OnInit {
       clearTimeout(this.searchTypeTimeout);
       this.searchTypeTimeout = setTimeout(() => {
         this.osm.searchPlace(placeName).subscribe((data) => {
+          this.placesList = data;
           console.log(data);
         });
       }, 2000);

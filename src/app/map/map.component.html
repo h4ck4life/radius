@@ -69,7 +69,11 @@
                                 width="18" height="18" />
                         </button> -->
                     </div>
-                    <input type="text" (keyup)="searchPlaces($event.target.value)" value="" placeholder="this location.." class="form-control" aria-label="Origin">
+                    <input type="text" (keyup)="searchPlaces($event.target.value)" list="datalistOptions"
+                        placeholder="this location.." class="form-control" aria-label="Origin">
+                    <datalist id="datalistOptions">
+                        <option *ngFor="let place of placesList" value="{{place.display_name}}">
+                    </datalist>
                 </div>
                 <div class="input-group mr-sm-2">
                     <button (click)="trackMyLocation()" class="btn {{trackMe ? 'btn-danger' : 'btn-info'}}"
