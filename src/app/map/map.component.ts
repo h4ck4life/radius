@@ -182,7 +182,7 @@ export class MapComponent implements OnInit {
         this.checkUserIsInRadiusCircle(ll);
         this.trackMeMarker.setLatLng(ll);
         //this.map.flyTo(ll);
-        this.map.fitBounds(group.getBounds(), {animate: true, maxZoom: 14});
+        this.map.fitBounds(group.getBounds(), { animate: true, maxZoom: 14 });
         L.DomUtil.addClass(document.getElementById('logo'), 'trackMeActive blink-image');
 
       }, (error) => {
@@ -219,6 +219,9 @@ export class MapComponent implements OnInit {
               self.originMarker.setLatLng(self.latlong);
               self.radiusMarker.setLatLng(self.latlong);
               self.updateUrlParams(parseFloat(place.lat), parseFloat(place.lon));
+            },
+            open(): void {
+              $('ul.ui-menu').width($(this).innerWidth());
             }
           }).focus((event, ui) => {
             $('#originInput').autocomplete('search');
