@@ -172,6 +172,7 @@ export class MapComponent implements OnInit {
         icon: destIcon,
       }).addTo(this.map);
 
+      const group = L.featureGroup([this.trackMeMarker, this.originMarker]);
       this.trackMeMarker.bindTooltip('You (live tracking)', { offset: new L.Point(20, 0) }).openTooltip();
 
       this.setScreenWakeLock();
@@ -180,7 +181,8 @@ export class MapComponent implements OnInit {
         const ll = new LatLng(position.coords.latitude, position.coords.longitude);
         this.checkUserIsInRadiusCircle(ll);
         this.trackMeMarker.setLatLng(ll);
-        this.map.flyTo(ll);
+        //this.map.flyTo(ll);
+        this.map.fitBounds(group.getBounds(), {animate: true, maxZoom: 14});
         L.DomUtil.addClass(document.getElementById('logo'), 'trackMeActive blink-image');
 
       }, (error) => {
@@ -200,25 +202,11 @@ export class MapComponent implements OnInit {
     });
   }
 
-  setUserLocation(): void {
-
-    /* const lat = parseFloat(el.getAttribute('data-lat'));
-    const lng = parseFloat(el.getAttribute('data-lng'));
-    this.latlong.lat = lat;
-    this.latlong.lng = lng;
-    this.map.panTo(this.latlong);
-    this.originMarker.setLatLng(this.latlong);
-    this.radiusMarker.setLatLng(this.latlong);
-    this.updateUrlParams(lat, lng); */
-
-  }
-
   searchPlaces(placeName: string): void {
     const self = this;
     if (placeName && placeName.length > 0 && placeName.length > 3) {
       clearTimeout(this.searchTypeTimeout);
       this.searchTypeTimeout = setTimeout(() => {
-        console.log('starting search..');
         this.osm.searchPlace(placeName).subscribe((data) => {
           this.placesList = data;
           $('#originInput').autocomplete({
