@@ -35,6 +35,7 @@ export class MapComponent implements OnInit {
     timeout: 3000,
     maximumAge: 60000
   };
+  wakeLock = null;
 
   ngOnInit(): void {
     try {
@@ -105,6 +106,11 @@ export class MapComponent implements OnInit {
       L.DomUtil.removeClass(document.getElementById('logo'), 'trackMeActive');
       L.DomUtil.removeClass(document.getElementById('logo'), 'blink-image');
 
+      this.wakeLock.release()
+        .then(() => {
+          this.wakeLock = null;
+        });
+
     } else {
       this.trackMe = true;
       const destIcon = L.icon({
@@ -119,6 +125,8 @@ export class MapComponent implements OnInit {
       }).addTo(this.map);
 
       this.trackMeMarker.bindTooltip('You (live tracking)', { offset: new L.Point(20, 0) }).openTooltip();
+
+      this.setScreenWakeLock();
 
       this.watchId = navigator.geolocation.watchPosition((position) => {
         const ll = new LatLng(position.coords.latitude, position.coords.longitude);
@@ -142,6 +150,20 @@ export class MapComponent implements OnInit {
       this.radiusMarker.setLatLng(this.latlong);
       this.updateUrlParams(data.lat, data.lng);
     });
+  }
+
+  private async setScreenWakeLock(): Promise<void> {
+    let nav: any;
+    nav = navigator;
+    if ('wakeLock' in navigator) {
+      try {
+        this.wakeLock = nav.wakeLock.request('screen');
+      } catch (err) {
+        console.log(err);
+      }
+    } else {
+      console.log('WakeLock not supported');
+    }
   }
 
   private checkUserIsInRadiusCircle(latlng: LatLng): void {
