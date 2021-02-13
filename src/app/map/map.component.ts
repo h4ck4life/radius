@@ -110,7 +110,7 @@ export class MapComponent implements OnInit {
       this.trackMeMarker = L.marker(new LatLng(0, 0), {
         icon: destIcon,
       }).addTo(this.map);
-      this.trackMeMarker.bindTooltip('You - Live tracking', { offset: new L.Point(20, 0) }).openTooltip();
+      this.trackMeMarker.bindTooltip('You (live tracking)', { offset: new L.Point(20, 0) }).openTooltip();
       this.watchId = navigator.geolocation.watchPosition((position) => {
         const ll = new LatLng(position.coords.latitude, position.coords.longitude);
         this.checkUserIsInRadiusCircle(ll);
@@ -159,9 +159,7 @@ export class MapComponent implements OnInit {
   }
 
   private initMap(): void {
-
     this.getMapStyles();
-
     // tslint:disable-next-line: max-line-length
     this.map = L.map('map', {
       zoomControl: false,
@@ -169,9 +167,11 @@ export class MapComponent implements OnInit {
       markerZoomAnimation: true,
       minZoom: 10
     }).setView(this.latlong, this.zoomLevel);
+
     L.control.zoom({
       position: 'bottomleft'
     }).addTo(this.map);
+
     this.map.on('zoomend', () => {
       this.updateUrlParams();
     });
@@ -179,24 +179,30 @@ export class MapComponent implements OnInit {
     this.tileLayer.addTo(this.map);
 
     L.control.scale({ metric: true, imperial: false }).addTo(this.map);
-    L.control.attribution({ prefix: '@h4ck4life' }).addAttribution('#StaySafe').addTo(this.map);
+    L.control.attribution({
+      prefix: '@h4ck4life'
+    }).addAttribution('#StaySafe')
+      .addTo(this.map);
 
     this.myIcon = L.icon({
       iconUrl: 'https://cdn3.iconfinder.com/data/icons/business-and-office-51/32/office_business_building_corporate-512.png',
       iconSize: [48, 48]
     });
+
     this.originMarker = L.marker(this.latlong, {
       // title: 'Center',
       icon: this.myIcon,
       draggable: true,
       riseOnHover: true
     }).addTo(this.map);
+
     this.originMarker.bindTooltip('Origin location', { offset: new L.Point(25, 0) }).openTooltip();
     this.originMarker.on('drag', (event) => {
       const marker = event.target;
       const position = marker.getLatLng();
       this.radiusMarker.setLatLng(new L.LatLng(position.lat, position.lng));
     });
+
     this.originMarker.on('dragend', (event) => {
       const marker = event.target;
       const position = marker.getLatLng();
