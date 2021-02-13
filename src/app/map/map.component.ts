@@ -52,6 +52,15 @@ export class MapComponent implements OnInit {
         } else {
           this.router.navigateByUrl('');
         }
+        document.addEventListener('visibilitychange', async () => {
+          let nav: any;
+          nav = navigator;
+          if (this.trackMe === true) {
+            if (this.wakeLock !== null && document.visibilityState === 'visible') {
+              this.wakeLock = await nav.wakeLock.request('screen');
+            }
+          }
+        });
         this.initMap();
       });
     } catch (error) {
@@ -106,6 +115,8 @@ export class MapComponent implements OnInit {
       L.DomUtil.removeClass(document.getElementById('logo'), 'trackMeActive');
       L.DomUtil.removeClass(document.getElementById('logo'), 'blink-image');
 
+      console.log(this.wakeLock);
+      
       this.wakeLock.release()
         .then(() => {
           this.wakeLock = null;
@@ -132,7 +143,7 @@ export class MapComponent implements OnInit {
         const ll = new LatLng(position.coords.latitude, position.coords.longitude);
         this.checkUserIsInRadiusCircle(ll);
         this.trackMeMarker.setLatLng(ll);
-        this.map.panTo(ll);
+        this.map.flyTo(ll);
         L.DomUtil.addClass(document.getElementById('logo'), 'trackMeActive blink-image');
 
       }, (error) => {
@@ -157,7 +168,7 @@ export class MapComponent implements OnInit {
     nav = navigator;
     if ('wakeLock' in navigator) {
       try {
-        this.wakeLock = nav.wakeLock.request('screen');
+        this.wakeLock = await nav.wakeLock.request('screen');
       } catch (err) {
         console.log(err);
       }
