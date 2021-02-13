@@ -41,16 +41,16 @@
                 <div class="input-group mr-sm-2">
                     <select (change)="getMapStyles($event.target.value)" class="form-control"
                         id="exampleFormControlSelect1">
-                        <option value="1">Open Street Map</option>
-                        <option value="2">Light Minimal</option>
-                        <option value="3">Dark Minimal</option>
-                        <!-- <option value="4">Toner</option> -->
-                        <option value="5">World Street Map</option>
-                        <option value="6">Stadia Bright</option>
+                        <option value="1" selected="{{selectedMap ? true : false}}">Open Street Map</option>
+                        <option value="2" selected="{{selectedMap ? true : false}}">Light Minimal</option>
+                        <option value="3" selected="{{selectedMap ? true : false}}">Dark Minimal</option>
+                        <!-- <option value="4" selected="{{selectedMap ? true : false}}">Toner</option> -->
+                        <option value="5" selected="{{selectedMap ? true : false}}">World Street Map</option>
+                        <option value="6" selected="{{selectedMap ? true : false}}">Stadia Bright</option>
                         <!-- <option value="7">Toner Light</option> -->
-                        <option value="8">World Topo Map</option>
-                        <option value="9">World Imagery</option>
-                        <option value="10">Voyager</option>
+                        <option value="8" selected="{{selectedMap ? true : false}}">World Topo Map</option>
+                        <option value="9" selected="{{selectedMap ? true : false}}">World Imagery</option>
+                        <option value="10" selected="{{selectedMap ? true : false}}">Voyager</option>
                         <!-- <option value="11">Hike Bike</option> -->
                     </select>
                     <div class="input-group-append">

@@ -17,7 +17,7 @@ export class MapComponent implements OnInit {
     private location: Location,
   ) { }
 
-  selectedMap = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+  selectedMap = '1';
   tileLayer: L.TileLayer = L.tileLayer(this.selectedMap, { crossOrigin: true, attribution: '@h4ck4life' });
   radiusMeters = 10000;
   latlong = new LatLng(3.1420, 101.6918); // National Mosque
@@ -44,11 +44,13 @@ export class MapComponent implements OnInit {
           && !isNaN(params.lng)
           && !isNaN(params.radius)
           && !isNaN(params.zoom)
+          && params.mapstyle
         ) {
           this.latlong.lat = parseFloat(params.lat);
           this.latlong.lng = parseFloat(params.lng);
           this.radiusMeters = params.radius * 1000;
           this.zoomLevel = params.zoom;
+          this.selectedMap = params.mapstyle;
         } else {
           this.router.navigateByUrl('');
         }
@@ -68,43 +70,56 @@ export class MapComponent implements OnInit {
     }
   }
 
-  getMapStyles(style: string = '1'): void {
+  getMapStyles(style: string = this.selectedMap): void {
+    let styleUrl = '';
     switch (style) {
       case '1':
-        this.selectedMap = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+        this.selectedMap = '1';
+        styleUrl = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
         break;
       case '2':
-        this.selectedMap = 'http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png';
+        this.selectedMap = '2';
+        styleUrl = 'http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png';
         break;
       case '3':
-        this.selectedMap = 'http://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png';
+        this.selectedMap = '3';
+        styleUrl = 'http://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png';
         break;
       case '4':
-        this.selectedMap = 'http://tile.stamen.com/toner/{z}/{x}/{y}.png';
+        this.selectedMap = '4';
+        styleUrl = 'http://tile.stamen.com/toner/{z}/{x}/{y}.png';
         break;
       case '5':
-        this.selectedMap = 'http://services.arcgisonline.com/arcgis/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}';
+        this.selectedMap = '5';
+        styleUrl = 'http://services.arcgisonline.com/arcgis/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}';
         break;
       case '6':
-        this.selectedMap = 'https://tiles.stadiamaps.com/tiles/osm_bright/{z}/{x}/{y}{r}.png';
+        this.selectedMap = '6';
+        styleUrl = 'https://tiles.stadiamaps.com/tiles/osm_bright/{z}/{x}/{y}{r}.png';
         break;
       case '7':
-        this.selectedMap = 'https://stamen-tiles-{s}.a.ssl.fastly.net/toner-lite/{z}/{x}/{y}{r}.{ext}';
+        this.selectedMap = '7';
+        styleUrl = 'https://stamen-tiles-{s}.a.ssl.fastly.net/toner-lite/{z}/{x}/{y}{r}.{ext}';
         break;
       case '8':
-        this.selectedMap = 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}';
+        this.selectedMap = '8';
+        styleUrl = 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}';
         break;
       case '9':
-        this.selectedMap = 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}';
+        this.selectedMap = '9';
+        styleUrl = 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}';
         break;
       case '10':
-        this.selectedMap = 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png';
+        this.selectedMap = '10';
+        styleUrl = 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png';
         break;
       case '11':
-        this.selectedMap = 'https://tiles.wmflabs.org/hikebike/{z}/{x}/{y}.png';
+        this.selectedMap = '11';
+        styleUrl = 'https://tiles.wmflabs.org/hikebike/{z}/{x}/{y}.png';
         break;
     }
-    this.tileLayer.setUrl(this.selectedMap);
+    this.tileLayer.setUrl(styleUrl);
+    this.updateUrlParams();
   }
 
   setRadiusMarker(radiusKm: string): void {
@@ -202,7 +217,9 @@ export class MapComponent implements OnInit {
   }
 
   private updateUrlParams(lat = this.latlong.lat, lng = this.latlong.lng): void {
-    this.location.replaceState(`/${lat.toFixed(4)}/${lng.toFixed(4)}/${this.radiusMeters / 1000}/${this.map.getZoom()}`);
+    this.location.replaceState(
+      `/${lat.toFixed(4)}/${lng.toFixed(4)}/${this.radiusMeters / 1000}/${this.map.getZoom()}/${this.selectedMap}`
+      );
   }
 
   private getPosition(): Promise<any> {
@@ -219,7 +236,7 @@ export class MapComponent implements OnInit {
   }
 
   private initMap(): void {
-    this.getMapStyles();
+    
     // tslint:disable-next-line: max-line-length
     this.map = L.map('map', {
       zoomControl: false,
@@ -228,6 +245,8 @@ export class MapComponent implements OnInit {
       minZoom: 10,
       attributionControl: false
     }).setView(this.latlong, this.zoomLevel);
+
+    this.getMapStyles();
 
     L.control.zoom({
       position: 'bottomleft'
@@ -268,20 +287,6 @@ export class MapComponent implements OnInit {
       this.map.panTo(new L.LatLng(position.lat, position.lng));
       this.updateUrlParams(position.lat, position.lng);
     });
-
-    // destination marker
-    /*
-    const destIcon = L.icon({
-      iconUrl: 'https://cdn2.iconfinder.com/data/icons/ios-7-icons/50/finish_flag-512.png',
-      iconSize: [32, 32],
-      iconAnchor: [32, 32],
-      popupAnchor: [-3, -76],
-    });
-    L.marker(this.destLatLong, {
-      title: 'Menara Alor Setar, Jalan Istana Kuning, Taman Stadium, Kampung Khatijah, Alor Setar, Kota Setar, Kedah, 05100, Malaysia',
-      icon: destIcon
-    }).addTo(this.map);
-     */
 
     this.radiusMarker = L.circle(this.latlong, {
       radius: this.radiusMeters
