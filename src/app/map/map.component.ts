@@ -97,6 +97,9 @@ export class MapComponent implements OnInit {
       this.trackMe = false;
       this.map.removeLayer(this.trackMeMarker);
       navigator.geolocation.clearWatch(this.watchId);
+      this.radiusMarker.setStyle({
+        color: 'rgb(51, 136, 255)'
+      });
     } else {
       this.trackMe = true;
       const destIcon = L.icon({
@@ -110,6 +113,7 @@ export class MapComponent implements OnInit {
       this.trackMeMarker.bindTooltip('You - Live tracking', { offset: new L.Point(20, 0) }).openTooltip();
       this.watchId = navigator.geolocation.watchPosition((position) => {
         const ll = new LatLng(position.coords.latitude, position.coords.longitude);
+        this.checkUserIsInRadiusCircle(ll);
         this.trackMeMarker.setLatLng(ll);
         this.map.panTo(ll);
       }, (error) => {
@@ -126,6 +130,14 @@ export class MapComponent implements OnInit {
       this.originMarker.setLatLng(this.latlong);
       this.radiusMarker.setLatLng(this.latlong);
       this.updateUrlParams(data.lat, data.lng);
+    });
+  }
+
+  private checkUserIsInRadiusCircle(latlng: LatLng): void {
+    const d = this.map.distance(latlng, this.radiusMarker.getLatLng());
+    const isInside = d < this.radiusMarker.getRadius();
+    this.radiusMarker.setStyle({
+      color: isInside ? 'green' : 'red'
     });
   }
 
@@ -174,7 +186,7 @@ export class MapComponent implements OnInit {
       iconSize: [48, 48]
     });
     this.originMarker = L.marker(this.latlong, {
-      //title: 'Center',
+      // title: 'Center',
       icon: this.myIcon,
       draggable: true,
       riseOnHover: true
@@ -193,7 +205,7 @@ export class MapComponent implements OnInit {
     });
 
     // destination marker
-    /* 
+    /*
     const destIcon = L.icon({
       iconUrl: 'https://cdn2.iconfinder.com/data/icons/ios-7-icons/50/finish_flag-512.png',
       iconSize: [32, 32],
