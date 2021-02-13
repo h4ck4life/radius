@@ -83,7 +83,7 @@ export class MapComponent implements OnInit {
     if (radiusKm && radiusKm !== '') {
       // tslint:disable-next-line: radix
       const radius = parseInt(radiusKm);
-      if (radius > 0) {
+      if (radius > 0 && radius <= 50) {
         const updatedRadius = radius * 1000;
         this.radiusMarker.setRadius(updatedRadius);
         this.radiusMeters = updatedRadius;
@@ -102,6 +102,7 @@ export class MapComponent implements OnInit {
       const destIcon = L.icon({
         iconUrl: 'https://cdn3.iconfinder.com/data/icons/business-and-office-51/32/rocket_science_spaceship_technology-512.png',
         iconSize: [32, 32],
+        shadowSize: [32, 32]
       });
       this.trackMeMarker = L.marker(new LatLng(0, 0), {
         icon: destIcon,
@@ -147,7 +148,16 @@ export class MapComponent implements OnInit {
 
     this.getMapStyles();
 
-    this.map = L.map('map', { zoomControl: false }).setView(this.latlong, this.zoomLevel);
+    // tslint:disable-next-line: max-line-length
+    this.map = L.map('map', {
+      zoomControl: false,
+      bounceAtZoomLimits: true,
+      markerZoomAnimation: true,
+      minZoom: 10
+    }).setView(this.latlong, this.zoomLevel);
+    L.control.zoom({
+      position: 'bottomleft'
+    }).addTo(this.map);
     this.map.on('zoomend', () => {
       this.updateUrlParams();
     });
