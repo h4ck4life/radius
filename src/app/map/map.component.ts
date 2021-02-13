@@ -181,8 +181,8 @@ export class MapComponent implements OnInit {
         const ll = new LatLng(position.coords.latitude, position.coords.longitude);
         this.checkUserIsInRadiusCircle(ll);
         this.trackMeMarker.setLatLng(ll);
-        //this.map.flyTo(ll);
-        this.map.fitBounds(group.getBounds(), { animate: true, maxZoom: 14 });
+        this.map.flyTo(ll);
+        //this.map.fitBounds(group.getBounds(), { animate: true });
         L.DomUtil.addClass(document.getElementById('logo'), 'trackMeActive blink-image');
 
       }, (error) => {
@@ -292,7 +292,7 @@ export class MapComponent implements OnInit {
     // tslint:disable-next-line: max-line-length
     this.map = L.map('map', {
       zoomControl: false,
-      bounceAtZoomLimits: true,
+      // bounceAtZoomLimits: true,
       markerZoomAnimation: true,
       minZoom: 10,
       attributionControl: false
