@@ -72,8 +72,8 @@
                     <input type="text" (keyup)="searchPlaces($event.target.value)" value="" placeholder="this location.." class="form-control" aria-label="Origin">
                 </div>
                 <div class="input-group mr-sm-2">
-                    <button (click)="trackMyLocation()" class="btn {{trackMe ? 'btn-info' : 'btn-outline-info'}}"
-                        type="button">Track me</button>
+                    <button (click)="trackMyLocation()" class="btn {{trackMe ? 'btn-danger' : 'btn-info'}}"
+                        type="button">{{trackMe ? 'Stop tracking' : 'Track me'}}</button>
                 </div>
 
                 <!-- 
