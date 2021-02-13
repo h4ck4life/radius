@@ -1,9 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import * as L from 'leaflet';
+import * as _ from 'lodash';
 import { LatLng } from 'leaflet';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { OsmService } from '../osm.service';
+
+declare var $: any;
 
 @Component({
   selector: 'app-map',
@@ -197,13 +200,42 @@ export class MapComponent implements OnInit {
     });
   }
 
+  setUserLocation(): void {
+
+    /* const lat = parseFloat(el.getAttribute('data-lat'));
+    const lng = parseFloat(el.getAttribute('data-lng'));
+    this.latlong.lat = lat;
+    this.latlong.lng = lng;
+    this.map.panTo(this.latlong);
+    this.originMarker.setLatLng(this.latlong);
+    this.radiusMarker.setLatLng(this.latlong);
+    this.updateUrlParams(lat, lng); */
+
+  }
+
   searchPlaces(placeName: string): void {
+    const self = this;
     if (placeName && placeName.length > 0 && placeName.length > 3) {
       clearTimeout(this.searchTypeTimeout);
       this.searchTypeTimeout = setTimeout(() => {
+        console.log('starting search..');
         this.osm.searchPlace(placeName).subscribe((data) => {
           this.placesList = data;
-          console.log(data);
+          $('#originInput').autocomplete({
+            source: _.map(data, 'display_name'),
+            select(event, ui): void {
+              const place = _.find(data, { display_name: ui.item.value });
+              self.latlong.lat = parseFloat(place.lat);
+              self.latlong.lng = parseFloat(place.lon);
+              self.map.panTo(self.latlong);
+              self.originMarker.setLatLng(self.latlong);
+              self.radiusMarker.setLatLng(self.latlong);
+              self.updateUrlParams(parseFloat(place.lat), parseFloat(place.lon));
+            }
+          }).focus((event, ui) => {
+            $('#originInput').autocomplete('search');
+          });
+          $('#originInput').autocomplete('search');
         });
       }, 2000);
     }
