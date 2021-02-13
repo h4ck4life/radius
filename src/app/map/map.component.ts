@@ -109,7 +109,9 @@ export class MapComponent implements OnInit {
       }).addTo(this.map);
       this.trackMeMarker.bindTooltip('You - Live tracking', { offset: new L.Point(20, 0) }).openTooltip();
       this.watchId = navigator.geolocation.watchPosition((position) => {
-        this.trackMeMarker.setLatLng(new LatLng(position.coords.latitude, position.coords.longitude));
+        const ll = new LatLng(position.coords.latitude, position.coords.longitude);
+        this.trackMeMarker.setLatLng(ll);
+        this.map.panTo(ll);
       }, (error) => {
         console.log(error);
       }, this.positionOptions);
