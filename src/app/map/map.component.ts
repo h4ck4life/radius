@@ -115,8 +115,6 @@ export class MapComponent implements OnInit {
       L.DomUtil.removeClass(document.getElementById('logo'), 'trackMeActive');
       L.DomUtil.removeClass(document.getElementById('logo'), 'blink-image');
 
-      console.log(this.wakeLock);
-      
       this.wakeLock.release()
         .then(() => {
           this.wakeLock = null;
