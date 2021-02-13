@@ -95,11 +95,16 @@ export class MapComponent implements OnInit {
   trackMyLocation(): void {
     if (this.trackMe === true) {
       this.trackMe = false;
-      this.map.removeLayer(this.trackMeMarker);
+
       navigator.geolocation.clearWatch(this.watchId);
+      this.map.removeLayer(this.trackMeMarker);
       this.radiusMarker.setStyle({
         color: 'rgb(51, 136, 255)'
       });
+
+      L.DomUtil.removeClass(document.getElementById('logo'), 'trackMeActive');
+      L.DomUtil.removeClass(document.getElementById('logo'), 'blink-image');
+
     } else {
       this.trackMe = true;
       const destIcon = L.icon({
@@ -108,19 +113,20 @@ export class MapComponent implements OnInit {
         shadowSize: [32, 32],
         className: 'blink-image'
       });
-      /* const destIcon = L.divIcon({
-        className: 'blink-image',
-        html: '<image src="https://cdn3.iconfinder.com/data/icons/business-and-office-51/32/rocket_science_spaceship_technology-512.png" width=32 heigh=32 />'
-      }); */
+
       this.trackMeMarker = L.marker(new LatLng(0, 0), {
         icon: destIcon,
       }).addTo(this.map);
+
       this.trackMeMarker.bindTooltip('You (live tracking)', { offset: new L.Point(20, 0) }).openTooltip();
+
       this.watchId = navigator.geolocation.watchPosition((position) => {
         const ll = new LatLng(position.coords.latitude, position.coords.longitude);
         this.checkUserIsInRadiusCircle(ll);
         this.trackMeMarker.setLatLng(ll);
         this.map.panTo(ll);
+        L.DomUtil.addClass(document.getElementById('logo'), 'trackMeActive blink-image');
+
       }, (error) => {
         console.log(error);
       }, this.positionOptions);
