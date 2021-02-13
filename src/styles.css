@@ -70,3 +70,24 @@
   animation: blink normal 1s infinite ease-in-out;
   /* Opera and prob css3 final iteration */
 }
+
+.pulse {
+  display: block;
+  border-radius: 50%;
+  cursor: pointer;
+  animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0;
+  }
+
+  70% {
+    box-shadow: 0 0 0 20px rgba(0, 0, 0, 0);
+  }
+
+  100% {
+    box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+  }
+}

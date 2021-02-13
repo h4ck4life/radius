@@ -18,7 +18,12 @@ export class MapComponent implements OnInit {
   ) { }
 
   selectedMap = '1';
-  tileLayer: L.TileLayer = L.tileLayer(this.selectedMap, { crossOrigin: true, attribution: '@h4ck4life' });
+  tileLayer: L.TileLayer = L.tileLayer(
+    this.selectedMap,
+    {
+      crossOrigin: true,
+      attribution: '@h4ck4life'
+    });
   radiusMeters = 10000;
   latlong = new LatLng(3.1420, 101.6918); // National Mosque
   // destLatLong = new LatLng(6.12439835, 100.36756271297492);
@@ -155,13 +160,7 @@ export class MapComponent implements OnInit {
 
     } else {
       this.trackMe = true;
-      const destIcon = L.icon({
-        iconUrl: 'https://cdn3.iconfinder.com/data/icons/business-and-office-51/32/rocket_science_spaceship_technology-512.png',
-        iconSize: [32, 32],
-        shadowSize: [32, 32],
-        className: 'blink-image'
-      });
-
+      const destIcon = this.generatePulsatingMarker(12, '#17a2b8');
       this.trackMeMarker = L.marker(new LatLng(0, 0), {
         icon: destIcon,
       }).addTo(this.map);
@@ -194,6 +193,20 @@ export class MapComponent implements OnInit {
     });
   }
 
+  private generatePulsatingMarker(radius, color): L.DivIcon {
+    const cssStyle = `
+      width: ${radius}px;
+      height: ${radius}px;
+      background: ${color};
+      color: ${color};
+      box-shadow: 0 0 0 ${color};
+    `;
+    return L.divIcon({
+      html: `<span style="${cssStyle}" class="pulse"/>`,
+      className: ''
+    });
+  }
+
   private async setScreenWakeLock(): Promise<void> {
     let nav: any;
     nav = navigator;
@@ -219,7 +232,7 @@ export class MapComponent implements OnInit {
   private updateUrlParams(lat = this.latlong.lat, lng = this.latlong.lng): void {
     this.location.replaceState(
       `/${lat.toFixed(4)}/${lng.toFixed(4)}/${this.radiusMeters / 1000}/${this.map.getZoom()}/${this.selectedMap}`
-      );
+    );
   }
 
   private getPosition(): Promise<any> {
@@ -236,7 +249,7 @@ export class MapComponent implements OnInit {
   }
 
   private initMap(): void {
-    
+
     // tslint:disable-next-line: max-line-length
     this.map = L.map('map', {
       zoomControl: false,
