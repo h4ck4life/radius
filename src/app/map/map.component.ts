@@ -18,7 +18,7 @@ export class MapComponent implements OnInit {
   ) { }
 
   selectedMap = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
-  tileLayer: L.TileLayer = L.tileLayer(this.selectedMap, { crossOrigin: true });
+  tileLayer: L.TileLayer = L.tileLayer(this.selectedMap, { crossOrigin: true, attribution: '@h4ck4life' });
   radiusMeters = 10000;
   latlong = new LatLng(3.1420, 101.6918); // National Mosque
   // destLatLong = new LatLng(6.12439835, 100.36756271297492);
@@ -105,8 +105,13 @@ export class MapComponent implements OnInit {
       const destIcon = L.icon({
         iconUrl: 'https://cdn3.iconfinder.com/data/icons/business-and-office-51/32/rocket_science_spaceship_technology-512.png',
         iconSize: [32, 32],
-        shadowSize: [32, 32]
+        shadowSize: [32, 32],
+        className: 'blink-image'
       });
+      /* const destIcon = L.divIcon({
+        className: 'blink-image',
+        html: '<image src="https://cdn3.iconfinder.com/data/icons/business-and-office-51/32/rocket_science_spaceship_technology-512.png" width=32 heigh=32 />'
+      }); */
       this.trackMeMarker = L.marker(new LatLng(0, 0), {
         icon: destIcon,
       }).addTo(this.map);
@@ -178,10 +183,8 @@ export class MapComponent implements OnInit {
 
     this.tileLayer.addTo(this.map);
 
-    L.control.scale({ metric: true, imperial: false }).addTo(this.map);
-    L.control.attribution({
-      prefix: '@h4ck4life'
-    }).addAttribution('#StaySafe')
+    L.control
+      .scale({ metric: true, imperial: false })
       .addTo(this.map);
 
     this.myIcon = L.icon({
