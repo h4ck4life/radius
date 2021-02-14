@@ -26,13 +26,13 @@
   background-color: rgb(248 249 250 / 80%);
 }
 
-.navbar>form>.input-group {
+/* .navbar>form>.input-group {
   margin-bottom: 0 !important;
 }
 
 .navbar>div.show>form>.input-group {
   margin-bottom: 5px !important;
-}
+} */
 
 .trackMeActive {
   filter: invert(40%) sepia(73%) saturate(865%) hue-rotate(155deg) brightness(106%) contrast(101%);

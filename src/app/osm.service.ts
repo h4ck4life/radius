@@ -9,7 +9,7 @@ export class OsmService {
 
   searchPlace(placeName: string): any {
     if (placeName) {
-      return this.http.get(`https://nominatim.openstreetmap.org/search?format=json&addressdetails=1&limit=5&q=${placeName}`);
+      return this.http.get(`https://nominatim.openstreetmap.org/search?format=json&addressdetails=1&limit=5&q=${placeName.trim()}`);
     }
   }
 

@@ -204,32 +204,30 @@ export class MapComponent implements OnInit {
 
   searchPlaces(placeName: string): void {
     const self = this;
-    if (placeName && placeName.length > 0 && placeName.length > 3) {
-      clearTimeout(this.searchTypeTimeout);
-      this.searchTypeTimeout = setTimeout(() => {
-        this.osm.searchPlace(placeName).subscribe((data) => {
-          this.placesList = data;
-          $('#originInput').autocomplete({
-            source: _.map(data, 'display_name'),
-            select(event, ui): void {
-              const place = _.find(data, { display_name: ui.item.value });
-              self.latlong.lat = parseFloat(place.lat);
-              self.latlong.lng = parseFloat(place.lon);
-              self.map.panTo(self.latlong);
-              self.originMarker.setLatLng(self.latlong);
-              self.radiusMarker.setLatLng(self.latlong);
-              self.updateUrlParams(parseFloat(place.lat), parseFloat(place.lon));
-            },
-            open(): void {
-              $('ul.ui-menu').width($(this).innerWidth());
-            }
-          }).focus((event, ui) => {
-            $('#originInput').autocomplete('search');
+    $('#originInput').autocomplete({
+      minLength: 3,
+      source(request, response): void {
+        $.get(`https://nominatim.openstreetmap.org/search/${placeName.trim()}?limit=10&format=json`, (data) => {
+          const filteredData = _.map(data, (object) => {
+            object.label = object.display_name;
+            object.value = object.display_name;
+            return _.pick(object, ['display_name', 'lat', 'lon', 'label', 'value']);
           });
-          $('#originInput').autocomplete('search');
+          response(filteredData);
         });
-      }, 2000);
-    }
+      },
+      select(event, ui): void {
+        self.latlong.lat = parseFloat(ui.item.lat);
+        self.latlong.lng = parseFloat(ui.item.lon);
+        self.map.panTo(self.latlong);
+        self.originMarker.setLatLng(self.latlong);
+        self.radiusMarker.setLatLng(self.latlong);
+        self.updateUrlParams(parseFloat(ui.item.lat), parseFloat(ui.item.lon));
+      },
+      open(): void {
+        $('ul.ui-menu').width($(this).innerWidth());
+      }
+    });
   }
 
   private generatePulsatingMarker(radius, color): L.DivIcon {
