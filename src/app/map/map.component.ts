@@ -207,10 +207,12 @@ export class MapComponent implements OnInit {
     $('#originInput').autocomplete({
       minLength: 3,
       source(request, response): void {
-        $.get(`https://nominatim.openstreetmap.org/search/${placeName.trim()}?limit=5&format=json`, (data) => {
+        $.get(`https://nominatim.openstreetmap.org/search/${placeName.trim()}?limit=5&format=json&addressdetails=1`, (data) => {
           const filteredData = _.map(data, (object) => {
+            const placeValue = object.display_name.split(',')[0];
+            const placeCity = object.address.city;
             object.label = object.display_name;
-            object.value = object.display_name;
+            object.value = `${placeValue}, ${placeCity}`;
             return _.pick(object, ['display_name', 'lat', 'lon', 'label', 'value']);
           });
           response(filteredData);

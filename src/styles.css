@@ -99,3 +99,13 @@
 .ui-menu-item{
   border-bottom: 1px solid rgb(230, 230, 230);  
 }
+
+::-ms-clear {
+  display: none;
+}
+
+.form-control-clear {
+  z-index: 10;
+  pointer-events: auto;
+  cursor: pointer;
+}
