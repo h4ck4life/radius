@@ -202,6 +202,10 @@ export class MapComponent implements OnInit {
     });
   }
 
+  clearSearchInput(): void {
+    $('#originInput').val('');
+  }
+
   searchPlaces(placeName: string): void {
     const self = this;
     $('#originInput').autocomplete({

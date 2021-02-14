@@ -67,6 +67,7 @@
                     </div>
                     <input type="text" (keyup)="searchPlaces($event.target.value)" placeholder="radius from here.."
                         class="form-control" aria-label="Origin" id="originInput">
+                    <span (click)="clearSearchInput()" style="cursor: pointer;" class=""><i class="bi bi-x" style="font-size: 1.3rem;"></i></span>
                 </div>
                 <div class="input-group mr-sm-2 mb-2">
                     <button (click)="trackMyLocation()" class="btn btn-block {{trackMe ? 'btn-danger' : 'btn-info'}}"
