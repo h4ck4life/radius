@@ -63,13 +63,13 @@
                         <input type="text" (keyup)="setRadiusMarker($event.target.value)"
                             value="{{radiusMeters / 1000}}" placeholder="Radius range" size="1" class="form-control"
                             aria-label="Radius in KiloMeters">
-                        <span class="input-group-text">km radius from</span>
+                        <span class="input-group-text">km</span>
                     </div>
-                    <input type="text" (keyup)="searchPlaces($event.target.value)" placeholder="this location.."
+                    <input type="text" (keyup)="searchPlaces($event.target.value)" placeholder="radius from here.."
                         class="form-control" aria-label="Origin" id="originInput">
                 </div>
                 <div class="input-group mr-sm-2 mb-2">
-                    <button (click)="trackMyLocation()" class="btn {{trackMe ? 'btn-danger' : 'btn-info'}}"
+                    <button (click)="trackMyLocation()" class="btn btn-block {{trackMe ? 'btn-danger' : 'btn-info'}}"
                         type="button">{{trackMe ? 'Stop tracking' : 'Track me'}}</button>
                 </div>
             </form>

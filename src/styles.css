@@ -95,3 +95,7 @@
 .ui-widget.ui-widget-content {
   z-index: 999999;
 }
+
+.ui-menu-item{
+  border-bottom: 1px solid rgb(230, 230, 230);  
+}

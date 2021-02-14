@@ -207,7 +207,7 @@ export class MapComponent implements OnInit {
     $('#originInput').autocomplete({
       minLength: 3,
       source(request, response): void {
-        $.get(`https://nominatim.openstreetmap.org/search/${placeName.trim()}?limit=10&format=json`, (data) => {
+        $.get(`https://nominatim.openstreetmap.org/search/${placeName.trim()}?limit=5&format=json`, (data) => {
           const filteredData = _.map(data, (object) => {
             object.label = object.display_name;
             object.value = object.display_name;
