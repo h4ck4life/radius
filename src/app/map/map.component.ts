@@ -22,7 +22,7 @@ export class MapComponent implements OnInit {
     private osm: OsmService
   ) { }
 
-  selectedMap = '1';
+  selectedMap = '4';
   tileLayer: L.TileLayer = L.tileLayer(
     this.selectedMap,
     {
@@ -81,7 +81,7 @@ export class MapComponent implements OnInit {
       this.router.navigateByUrl('');
     }
   }
-
+  
   getMapStyles(style: string = this.selectedMap): void {
     let styleUrl = '';
     switch (style) {
@@ -99,7 +99,7 @@ export class MapComponent implements OnInit {
         break;
       case '4':
         this.selectedMap = '4';
-        styleUrl = 'http://tile.stamen.com/toner/{z}/{x}/{y}.png';
+        styleUrl = 'http://mt0.google.com/vt/lyrs=m&x={x}&y={y}&z={z}';
         break;
       case '5':
         this.selectedMap = '5';
@@ -107,11 +107,11 @@ export class MapComponent implements OnInit {
         break;
       case '6':
         this.selectedMap = '6';
-        styleUrl = 'https://tiles.stadiamaps.com/tiles/osm_bright/{z}/{x}/{y}{r}.png';
+        styleUrl = 'http://mt0.google.com/vt/lyrs=s&x={x}&y={y}&z={z}';
         break;
       case '7':
         this.selectedMap = '7';
-        styleUrl = 'https://stamen-tiles-{s}.a.ssl.fastly.net/toner-lite/{z}/{x}/{y}{r}.{ext}';
+        styleUrl = 'http://mt0.google.com/vt/lyrs=s,h&x={x}&y={y}&z={z}';
         break;
       case '8':
         this.selectedMap = '8';
@@ -127,7 +127,7 @@ export class MapComponent implements OnInit {
         break;
       case '11':
         this.selectedMap = '11';
-        styleUrl = 'https://tiles.wmflabs.org/hikebike/{z}/{x}/{y}.png';
+        styleUrl = 'http://mt0.google.com/vt/lyrs=p&x={x}&y={y}&z={z}';
         break;
     }
     this.tileLayer.setUrl(styleUrl);

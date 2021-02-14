@@ -12,7 +12,7 @@
             <span class="navbar-toggler-icon"></span>
         </button>
 
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div class="collapse navbar-collapse pt-2" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
                 <!-- 
                 <li class="nav-item active">
@@ -45,14 +45,14 @@
                         <option value="1" selected="{{selectedMap ? true : false}}">Open Street Map</option>
                         <option value="2" selected="{{selectedMap ? true : false}}">Light Minimal</option>
                         <option value="3" selected="{{selectedMap ? true : false}}">Dark Minimal</option>
-                        <!-- <option value="4" selected="{{selectedMap ? true : false}}">Toner</option> -->
+                        <option value="4" selected="{{selectedMap ? true : false}}">Google Maps</option>
+                        <option value="6" selected="{{selectedMap ? true : false}}">Google Satellite Only</option>
+                        <option value="7" selected="{{selectedMap ? true : false}}">Google Hybrid</option>
+                        <option value="11" selected="{{selectedMap ? true : false}}">Google Terrain</option>
                         <option value="5" selected="{{selectedMap ? true : false}}">World Street Map</option>
-                        <!-- <option value="6" selected="{{selectedMap ? true : false}}">Stadia Bright</option> -->
-                        <!-- <option value="7">Toner Light</option> -->
                         <option value="8" selected="{{selectedMap ? true : false}}">World Topo Map</option>
                         <option value="9" selected="{{selectedMap ? true : false}}">World Imagery</option>
                         <option value="10" selected="{{selectedMap ? true : false}}">Voyager</option>
-                        <!-- <option value="11">Hike Bike</option> -->
                     </select>
                     <div class="input-group-append">
                         <span class="input-group-text">Map style</span>
@@ -67,7 +67,8 @@
                     </div>
                     <input type="text" (keyup)="searchPlaces($event.target.value)" placeholder="radius from here.."
                         class="form-control" aria-label="Origin" id="originInput">
-                    <span (click)="clearSearchInput()" style="cursor: pointer;" class=""><i class="bi bi-x" style="font-size: 1.3rem;"></i></span>
+                    <span (click)="clearSearchInput()" style="cursor: pointer;" class=""><i class="bi bi-x"
+                            style="font-size: 1.3rem;"></i></span>
                 </div>
                 <div class="input-group mr-sm-2 mb-2">
                     <button (click)="trackMyLocation()" class="btn btn-block {{trackMe ? 'btn-danger' : 'btn-info'}}"
