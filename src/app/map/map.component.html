@@ -42,17 +42,17 @@
                 <div class="input-group mr-sm-2 mb-2">
                     <select (change)="getMapStyles($event.target.value)" class="form-control"
                         id="exampleFormControlSelect1">
-                        <option value="4" selected>Google Maps</option>
-                        <option value="7" selected="{{selectedMap ? true : false}}">Google Satellite</option>
-                        <option value="11" selected="{{selectedMap ? true : false}}">Google Terrain</option>
-                        <option value="1" selected="{{selectedMap ? true : false}}">Open Street Map</option>
-                        <option value="2" selected="{{selectedMap ? true : false}}">Light Minimal</option>
-                        <option value="3" selected=true>Dark Minimal</option>
+                        <option value="4" [selected]="selectedMap === '4'">Google Maps</option>
+                        <option value="7" [selected]="selectedMap === '7'">Google Satellite</option>
+                        <option value="11" [selected]="selectedMap === '11'">Google Terrain</option>
+                        <option value="1" [selected]="selectedMap === '1'">Open Street Map</option>
+                        <option value="2" [selected]="selectedMap === '2'">Light Minimal</option>
+                        <option value="3" [selected]="selectedMap === '3'">Dark Minimal</option>
                         <!-- <option value="6" selected="{{selectedMap ? true : false}}">Google Satellite</option> -->
-                        <option value="5" selected="{{selectedMap ? true : false}}">World Street Map</option>
-                        <option value="8" selected="{{selectedMap ? true : false}}">World Topo Map</option>
-                        <option value="9" selected="{{selectedMap ? true : false}}">World Imagery</option>
-                        <option value="10" selected="{{selectedMap ? true : false}}">Voyager</option>
+                        <option value="5" [selected]="selectedMap === '5'">World Street Map</option>
+                        <option value="8" [selected]="selectedMap === '8'">World Topo Map</option>
+                        <option value="9" [selected]="selectedMap === '9'">World Imagery</option>
+                        <option value="10" [selected]="selectedMap === '10'">Voyager</option>
                     </select>
                     <div class="input-group-append">
                         <span class="input-group-text">Map style</span>
