@@ -39,7 +39,7 @@
                  -->
             </ul>
             <form class="form-inline my-2 my-lg-0">
-                <div class="input-group mr-sm-2 mb-sm-2">
+                <div class="input-group mr-sm-2 mb-2">
                     <select (change)="getMapStyles($event.target.value)" class="form-control"
                         id="exampleFormControlSelect1">
                         <option value="1" selected="{{selectedMap ? true : false}}">Open Street Map</option>
@@ -58,7 +58,7 @@
                         <span class="input-group-text">Map style</span>
                     </div>
                 </div>
-                <div class="input-group mr-sm-2 mb-sm-2">
+                <div class="input-group mr-sm-2 mb-2">
                     <div class="input-group-append">
                         <input type="text" (keyup)="setRadiusMarker($event.target.value)"
                             value="{{radiusMeters / 1000}}" placeholder="Radius range" size="1" class="form-control"
@@ -68,7 +68,7 @@
                     <input type="text" (keyup)="searchPlaces($event.target.value)" placeholder="this location.."
                         class="form-control" aria-label="Origin" id="originInput">
                 </div>
-                <div class="input-group mr-sm-2 mb-sm-2">
+                <div class="input-group mr-sm-2 mb-2">
                     <button (click)="trackMyLocation()" class="btn {{trackMe ? 'btn-danger' : 'btn-info'}}"
                         type="button">{{trackMe ? 'Stop tracking' : 'Track me'}}</button>
                 </div>
