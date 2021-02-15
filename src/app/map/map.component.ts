@@ -5,6 +5,7 @@ import { LatLng } from 'leaflet';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { OsmService } from '../osm.service';
+import { Meta } from '@angular/platform-browser';
 
 declare var $: any;
 
@@ -19,7 +20,8 @@ export class MapComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private location: Location,
-    private osm: OsmService
+    private osm: OsmService,
+    private metaService: Meta
   ) { }
 
   selectedMap = '4';
@@ -51,6 +53,8 @@ export class MapComponent implements OnInit {
 
   ngOnInit(): void {
     try {
+      this.metaService.updateTag({ name: 'description', content: 'Map radius range marker. View your live location on the map within radius.'});
+      this.metaService.updateTag({ name: 'keywords', content: 'free radius online, free radius map online, mco, malaysia radius map'});
       this.route.params.subscribe((params) => {
         if (!isNaN(params.lat)
           && !isNaN(params.lng)
