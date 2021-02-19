@@ -85,7 +85,7 @@ export class MapComponent implements OnInit {
       this.router.navigateByUrl('');
     }
   }
-  
+
   getMapStyles(style: string = this.selectedMap): void {
     let styleUrl = '';
     switch (style) {

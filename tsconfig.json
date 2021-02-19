@@ -3,6 +3,7 @@
   "compileOnSave": false,
   "angularCompilerOptions": {
     "strictTemplates": true,
+    "strictDomEventTypes": false,
   },
   "compilerOptions": {
     "baseUrl": "./",
