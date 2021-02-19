@@ -186,7 +186,7 @@ export class MapComponent implements OnInit {
         this.checkUserIsInRadiusCircle(ll);
         this.trackMeMarker.setLatLng(ll);
         this.map.flyTo(ll);
-        //this.map.fitBounds(group.getBounds(), { animate: true });
+        // this.map.fitBounds(group.getBounds(), { animate: true });
         L.DomUtil.addClass(document.getElementById('logo'), 'trackMeActive blink-image');
 
       }, (error) => {
